@@ -19,15 +19,6 @@ void setup()
   pinMode(p6, OUTPUT);
   pinMode(p7, OUTPUT);
   pinMode(p8, OUTPUT);
-
-  pinMode(p1, HIGH);
-  pinMode(p2, HIGH);
-  pinMode(p3, HIGH);
-  pinMode(p4, HIGH);
-  pinMode(p5, HIGH);
-  pinMode(p6, HIGH);
-  pinMode(p7, HIGH);
-  pinMode(p8, HIGH);
 }
  
 void loop()                  
@@ -45,29 +36,29 @@ void loop()
 
   while(Serial.available() > 0) {
     if(Serial.read() == '\n'){
-      if(temperatureFeratureF > 80) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p2, LOW);}
+      if(temperatureFeratureF >= 80)
+        analogWrite(temperatureF);
 
-      if(temperatureF >= 90) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p3, LOW);}
+      if(temperatureF > 90)
+        analogWrite(temperatureF);
+        
+      if(temperatureFeratureF > 100)
+        analogWrite(temperatureF);
 
-      if(temperatureF > 100) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p4, LOW);}
+      if(temperatureF > 110)
+        analogWrite(temperatureF);
 
-      if(temperatureF > 110) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p5, LOW);}
+      if(temperatureFeratureF > 120)
+        analogWrite(temperatureF);
 
-      if(temperatureF > 120) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p6, LOW);}
+      if(temperatureF >= 130)
+        analogWrite(temperatureF);
 
-      if(temperatureF > 130) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p7, LOW);}
+      if(temperatureFeratureF > 140)
+        analogWrite(temperatureF);
 
-      if(temperatureF > 140) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p7, LOW);}
-
-      if(temperatureF >= 150) {digitalWrite(p1, HIGH);}
-      else {digitalWrite(p8, LOW);}
+      if(temperatureF >= 150)
+        analogWrite(temperatureF);
 
        delay(1000);
 }
