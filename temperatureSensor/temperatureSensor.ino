@@ -1,16 +1,11 @@
-int sensorPin = A0;
-const int p1 = 1;
-const int p2 = 2;
-const int p3 = 3;
-const int p4 = 4;
-const int p5 = 5;
-const int p6 = 6;
-const int p7 = 7;
-const int p8 = 8;
 void setup()
 {
-  Serial.begin(9600); 
-    Serial.begin(9600);
+  // initialize serial:
+  Serial.begin(9600);
+  // make the pins outputs:
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
   pinMode(p1, OUTPUT);
   pinMode(p2, OUTPUT);
   pinMode(p3, OUTPUT);
@@ -19,46 +14,83 @@ void setup()
   pinMode(p6, OUTPUT);
   pinMode(p7, OUTPUT);
   pinMode(p8, OUTPUT);
+  pinMode(p9, OUTPUT);
+  pinMode(analog_no, INPUT);
 }
- 
-void loop()                  
+
+
+void loop()
 {
+  int pin_value;
+  int temperature;
+  pin_value = analogRead(analog_no);
 
- int temperatureF = analogRead(sensorPin);  
- 
- float voltage = temperatureF * 5.0;
- voltage /= 1024.0; 
- 
- float temperatureFeratureC = (voltage - 0.5) * 100 ; 
+  float voltage = pin_value * 5.0;
+  voltage /= 1024;
+  float temperatureC = (voltage - 0.5) * 100;
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+    Serial.print("Current temperature is ") ;
+  Serial.print(temperatureF) ;
+  Serial.println("F");
+  Serial.print(temperatureC) ;
+  Serial.println("C");
 
- float temperatureFeratureF = (temperatureFeratureC * 9.0 / 5.0) + 32.0;
- Serial.print(temperatureFeratureF); Serial.println(" degrees F");
+  delay(500);
 
-  while(Serial.available() > 0) {
-    if(Serial.read() == '\n'){
-      if(temperatureFeratureF >= 80)
-        analogWrite(temperatureF);
+  int position = (int) temperatureC % 10;
+  position = map(position, 0, 10, 0, 255);
 
-      if(temperatureF > 90)
-        analogWrite(temperatureF);
-        
-      if(temperatureFeratureF > 100)
-        analogWrite(temperatureF);
+  digitalWrite(p1, LOW);
+  digitalWrite(p2, LOW);
+  digitalWrite(p3, LOW);
+  digitalWrite(p4, LOW);
+  digitalWrite(p5, LOW);
+  digitalWrite(p6, LOW);
+  digitalWrite(p7, LOW);
+  digitalWrite(p8, LOW);
+  digitalWrite(p9, LOW);
+  
+  if (temperatureC > 40){
+    digitalWrite(p1, HIGH);
+    analogWrite(p2, position);
+  }
 
-      if(temperatureF > 110)
-        analogWrite(temperatureF);
+  else if (temperatureC > 50){
+    digitalWrite(p2, HIGH);
+    analogWrite(p3, position);
+  }
 
-      if(temperatureFeratureF > 120)
-        analogWrite(temperatureF);
+  else if (temperatureC > 60){
+    digitalWrite(p3, HIGH);
+    analogWrite(p4, position);
+  }
 
-      if(temperatureF >= 130)
-        analogWrite(temperatureF);
+  else if (temperatureC > 70){
+    digitalWrite(p4, HIGH);
+    analogWrite(p5, position);
+  }
 
-      if(temperatureFeratureF > 140)
-        analogWrite(temperatureF);
+  else if (temperatureC > 80){
+    digitalWrite(p5, HIGH);
+    analogWrite(p6, position);
+  }
 
-      if(temperatureF >= 150)
-        analogWrite(temperatureF);
+  else if (temperatureC > 90){
+    digitalWrite(p6, HIGH);
+    analogWrite(p7, position);
+  }
 
-       delay(1000);
+  else if (temperatureC > 100){
+    digitalWrite(p7, HIGH);
+    analogWrite(p8, position);
+  }
+
+  else if (temperatureC > 110){
+    digitalWrite(p8, HIGH);
+    analogWrite(p9, position);
+  }
+
+  else if (temperatureC > 120){
+    digitalWrite(p9, HIGH);
+  }
 }
