@@ -1,8 +1,8 @@
 void setup()
 {
-  // initialize serial:
+  // initialize serialization
   Serial.begin(9600);
-  // make the pins outputs:
+  // make outputs
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
